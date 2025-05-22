@@ -34,4 +34,31 @@ for (line in lines) {
         }
 }
 
+
+
 head(df, 10)
+
+
+## Manual corrections
+
+# Country names
+df[df$Country == "CZECH REPUBLIC/",]$Country <- "CZECH REPUBLIC"
+
+# Party names
+
+# Remove a few trailing dashes
+df$Party_Name <- sub("\\s*-\\s*$", "", df$Party_Name)
+
+#Remove final spaces
+df$Party_Name <- sub("\\s+$", "", df$Party_Name)
+
+# Incomplete names in extraction. Corrections
+df[df$Party_Name == "Arise the Republic (DLR) /",]$Party_Name <- "Arise the Republic (DLR) / France Arise (DLF)"
+df[df$Party_Name == "Palmer United Party (PUP) /",]$Party_Name <- "Palmer United Party (PUP) / United Australia Party (UAP)"
+
+
+# Save data
+rio::export(df, here::here("CSES_Party Codes.xlsx"), format = "xlsx")
+
+
+
