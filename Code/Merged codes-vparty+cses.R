@@ -1,4 +1,5 @@
 
+#### MERGING PARTY CODES ####
 # download and read Party Facts mapping table
 file_name <- 'partyfacts-mapping.csv'
 if( ! file_name %in% list.files())
@@ -19,14 +20,14 @@ df <- merge_table[!is.na(merge_table$dataset_key.y),]
 df <- merge_table[!is.na(merge_table$dataset_key.x),]
 
 df <- dplyr::select(df, country.x, dataset_key.x, dataset_party_id.x, name_short.x, name_english.x,
-              year_first.x, year_last.x, share.x, 
+              year_first.x, year_last.x, share.x, share_year.x,
               partyfacts_id,
               country.y, dataset_key.y, dataset_party_id.y, name_short.y, name_english.y,
               year_first.y, year_last.y,  share.y, share_year.y)
 
 
-# write results into file with dataset names in file name
+# write results
 rio::export(df, "merged_codes.xlsx", format = "xlsx")
 
 
-
+with(df, cbind(share.x,share_year.x, share.y,share_year.y))
